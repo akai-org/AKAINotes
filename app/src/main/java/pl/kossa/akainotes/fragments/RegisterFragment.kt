@@ -42,7 +42,7 @@ class RegisterFragment: Fragment() {
         }
 
         registerCheckBox.setOnClickListener {
-            if (registerCheckBox.isChecked) viewModel.setCheckAcceptTerms("true") else viewModel.setCheckAcceptTerms("false")
+            if (registerCheckBox.isChecked) viewModel.setCheckAcceptTerms(true) else viewModel.setCheckAcceptTerms(false)
         }
 
         collectFlow()
