@@ -1,11 +1,9 @@
 package pl.kossa.akainotes.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -14,7 +12,6 @@ import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import pl.kossa.akainotes.R
-import pl.kossa.akainotes.activities.RegisterActivity
 
 class LoginFragment : Fragment() {
 
@@ -43,8 +40,7 @@ class LoginFragment : Fragment() {
             requireActivity().finish()
         }
         registerButton.setOnClickListener {
-            findNavController().navigate(LoginFragmentDirections.goToRegisterActivity())
-            requireActivity().finish()
+            findNavController().navigate(LoginFragmentDirections.goToRegisterFragment())
         }
         collectFlow()
     }

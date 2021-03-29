@@ -10,9 +10,10 @@ class RegisterViewModel : ViewModel() {
     private val _email = MutableStateFlow("")
     private val _password = MutableStateFlow("")
     private val _repeatPassword = MutableStateFlow("")
+    private val _isCheckedAcceptTerms = MutableStateFlow("")
 
-    val isChangePasswordEnabled = combine(_email, _password, _repeatPassword) { email, password, repeatPassword ->
-        return@combine email.isNotBlank() && password.isNotBlank() && repeatPassword.isNotBlank() && (password == repeatPassword) && Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    val isChangePasswordEnabled = combine(_email, _password, _repeatPassword, _isCheckedAcceptTerms) { email, password, repeatPassword, isChecked ->
+        return@combine email.isNotBlank() && password.isNotBlank() && repeatPassword.isNotBlank() && (password == repeatPassword) && Patterns.EMAIL_ADDRESS.matcher(email).matches() && (isChecked == "true")
     }
 
     fun setOldPassword(email: String) {
@@ -25,6 +26,14 @@ class RegisterViewModel : ViewModel() {
 
     fun setRepeatPassword(password: String) {
         _repeatPassword.value = password
+    }
+
+    fun setCheckAcceptTerms(value: String) {
+        _isCheckedAcceptTerms.value = value
+    }
+
+    fun getCheckAcceptTerms(): String {
+        return _isCheckedAcceptTerms.value
     }
 
     fun getEmail(): String {

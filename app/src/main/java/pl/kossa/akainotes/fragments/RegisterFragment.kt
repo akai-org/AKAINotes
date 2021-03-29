@@ -40,6 +40,11 @@ class RegisterFragment: Fragment() {
         repeatPasswordInputEditText.doOnTextChanged { text, _, _, _ ->
             viewModel.setRepeatPassword(text.toString())
         }
+
+        registerCheckBox.setOnClickListener {
+            if (registerCheckBox.isChecked) viewModel.setCheckAcceptTerms("true") else viewModel.setCheckAcceptTerms("false")
+        }
+
         collectFlow()
 
         registerButton.setOnClickListener {
