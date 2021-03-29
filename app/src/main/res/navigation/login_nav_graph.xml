@@ -14,6 +14,9 @@
         <action
             android:id="@+id/goToMainActivity"
             app:destination="@id/mainActivity" />
+        <action
+            android:id="@+id/goToRegisterFragment"
+            app:destination="@id/registerFragment" />
     </fragment>
 
     <activity
@@ -21,5 +24,11 @@
         android:name="pl.kossa.akainotes.activities.MainActivity"
         android:label="MainActivity"
         tools:layout="@layout/activity_main" />
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="pl.kossa.akainotes.fragments.RegisterFragment"
+        android:label="RegisterFragment"
+        tools:layout="@layout/fragment_register"/>
 
 </navigation>
