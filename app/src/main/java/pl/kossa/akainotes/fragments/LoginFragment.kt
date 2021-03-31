@@ -39,9 +39,15 @@ class LoginFragment : Fragment() {
             findNavController().navigate(LoginFragmentDirections.goToMainActivity())
             requireActivity().finish()
         }
+
         registerButton.setOnClickListener {
             findNavController().navigate(LoginFragmentDirections.goToRegisterFragment())
         }
+
+        changePasswordButton.setOnClickListener {
+            findNavController().navigate(LoginFragmentDirections.goToChangePassword())
+        }
+
         collectFlow()
     }
 

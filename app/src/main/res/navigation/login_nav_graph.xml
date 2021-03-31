@@ -14,9 +14,15 @@
         <action
             android:id="@+id/goToMainActivity"
             app:destination="@id/mainActivity" />
+
+        <action
+            android:id="@+id/goToChangePassword"
+            app:destination="@id/changePasswordFragment" />
+
         <action
             android:id="@+id/goToRegisterFragment"
             app:destination="@id/registerFragment" />
+
     </fragment>
 
     <activity
@@ -26,9 +32,14 @@
         tools:layout="@layout/activity_main" />
 
     <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="pl.kossa.akainotes.fragments.ChangePasswordFragment"
+        android:label="fragment_change_password"
+        tools:layout="@layout/fragment_change_password" />
+
+    <fragment
         android:id="@+id/registerFragment"
         android:name="pl.kossa.akainotes.fragments.RegisterFragment"
         android:label="RegisterFragment"
         tools:layout="@layout/fragment_register"/>
-
 </navigation>
