@@ -8,5 +8,6 @@
     <string name="new_password">Nowe hasło</string>
     <string name="repeat_password">Powtórz hasło</string>
     <string name="change_password">Zmień hasło</string>
-    <string name="acceptTerms">Akceptuję regulamin użytkownika</string>
+    <string name="accept_terms">Akceptuję regulamin użytkownika</string>
+    <string name="send_mail">Send mail</string>
 </resources>
