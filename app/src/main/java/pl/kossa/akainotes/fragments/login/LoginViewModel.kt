@@ -1,4 +1,4 @@
-package pl.kossa.akainotes.fragments
+package pl.kossa.akainotes.fragments.login
 
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
