@@ -40,7 +40,7 @@ abstract class SwipeDeleteCallback(context: Context) : ItemTouchHelper.Callback(
     ) {
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
         val itemView = viewHolder.itemView
-        val isCanceled = dX == 0f && !isCurrentlyActive
+        val isCanceled = dX == 0f || !isCurrentlyActive
         if (isCanceled) {
             if (dX > 0) {
                 clearCanvas(
