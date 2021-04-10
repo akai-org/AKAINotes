@@ -12,4 +12,7 @@
     <string name="send_mail">Send mail</string>
     <string name="edit">Edit</string>
     <string name="note_delete_question">Czy napewno chcesz usunąć notatkę?</string>
+    <string name="plus">+</string>
+    <string name="title">Tytuł</string>
+    <string name="note_content">Treść notatki</string>
 </resources>

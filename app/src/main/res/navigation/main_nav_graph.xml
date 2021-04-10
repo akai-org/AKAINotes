@@ -9,5 +9,22 @@
         android:id="@+id/notesFragment"
         android:name="pl.kossa.akainotes.fragments.notes.NotesFragment"
         android:label="NotesFragment"
-        tools:layout="@layout/fragment_notes" />
+        tools:layout="@layout/fragment_notes">
+
+        <action
+            android:id="@+id/goToAddNote"
+            app:destination="@id/addNoteFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/addNoteFragment"
+        android:name="pl.kossa.akainotes.fragments.addNotes.AddNoteFragment"
+        android:label="Add Notes"
+        tools:layout="@layout/fragment_add_note">
+
+        <action
+            android:id="@+id/goToNotes"
+            app:destination="@+id/notesFragment"/>
+    </fragment>
 </navigation>
