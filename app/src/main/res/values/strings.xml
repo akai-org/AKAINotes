@@ -15,4 +15,5 @@
     <string name="click_to_add_note">Naciśnij, żeby dodać notatkę</string>
     <string name="title">Tytuł</string>
     <string name="note_content">Treść notatki</string>
+    <string name="add_note">Dodaj notatkę</string>
 </resources>

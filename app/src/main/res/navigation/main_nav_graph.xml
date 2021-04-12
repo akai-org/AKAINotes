@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/addNoteFragment"
-        android:name="pl.kossa.akainotes.fragments.addNotes.AddNoteFragment"
+        android:name="pl.kossa.akainotes.fragments.addNote.AddNoteFragment"
         android:label="Add Notes"
         tools:layout="@layout/fragment_add_note">
 

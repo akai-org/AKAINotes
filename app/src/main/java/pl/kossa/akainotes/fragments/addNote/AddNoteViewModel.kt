@@ -1,4 +1,4 @@
-package pl.kossa.akainotes.fragments.addNotes
+package pl.kossa.akainotes.fragments.addNote
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
