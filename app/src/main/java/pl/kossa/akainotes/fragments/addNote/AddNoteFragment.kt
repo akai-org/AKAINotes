@@ -16,6 +16,7 @@ class AddNoteFragment : Fragment(R.layout.fragment_add_note) {
         AddNoteViewModel()
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -36,6 +37,10 @@ class AddNoteFragment : Fragment(R.layout.fragment_add_note) {
             ).show()
             findNavController().navigate(AddNoteFragmentDirections.goToNotes())
             //TODO call api
+        }
+
+        backArrow.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 }

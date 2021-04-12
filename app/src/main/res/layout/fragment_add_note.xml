@@ -4,6 +4,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+
+    <LinearLayout
+        android:id="@+id/actionBarLL"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/purple_500"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_note"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/actionBarLL"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/actionBarLL" />
+
+    <ImageView
+        android:id="@+id/backArrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_arrow_back"
+        android:contentDescription="@string/click_to_go_backa"
+        app:layout_constraintBottom_toBottomOf="@id/actionBarLL"
+        app:layout_constraintStart_toStartOf="@id/actionBarLL"
+        app:layout_constraintTop_toTopOf="@id/actionBarLL" />
+
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/titleTextInputLayout"
         android:layout_width="match_parent"
@@ -11,7 +45,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/titleTextView">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/titleTextInputEditText"
@@ -52,7 +86,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="@string/add_note"
+        android:text="@string/save"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
