@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,7 +19,7 @@ import pl.kossa.akainotes.extensions.makeCancelSnackbar
 
 class NotesFragment : Fragment(R.layout.fragment_notes) {
 
-    private val adapter by lazy {
+    val adapter by lazy {
         NotesRvAdapter(arrayListOf())
     }
 
@@ -52,6 +53,9 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        addNotesButton.setOnClickListener {
+            findNavController().navigate(NotesFragmentDirections.goToAddNote())
+        }
         setupRecyclerView()
     }
 
