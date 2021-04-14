@@ -52,7 +52,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/title"
-            android:inputType="text" />
+            android:inputType="text"
+            android:maxLength="100" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -74,7 +75,8 @@
             android:hint="@string/note_content"
             android:inputType="textMultiLine"
             android:lines="8"
-            android:textAlignment="gravity">
+            android:textAlignment="gravity"
+            android:maxLength="500" >
 
         </com.google.android.material.textfield.TextInputEditText>
 

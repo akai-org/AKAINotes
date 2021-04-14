@@ -2,24 +2,29 @@ package pl.kossa.akainotes.fragments.addNote
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
 
 class AddNoteViewModel : ViewModel() {
-    val title = MutableStateFlow("")
-    val content = MutableStateFlow("")
+    val _title = MutableStateFlow("")
+    val _content = MutableStateFlow("")
+
+    val isSaveNoteEnabled = combine(_title, _content) {title, content ->
+        return@combine title.isNotBlank() && title.length <= 100 && content.length <= 500
+    }
 
     fun getTitle(): String {
-        return title.value
+        return _title.value
     }
 
     fun setTitle(value: String) {
-        title.value = value
+        _title.value = value
     }
 
     fun getContent(): String {
-        return content.value
+        return _content.value
     }
 
     fun setContent(value: String) {
-        content.value = value
+        _content.value = value
     }
 }
