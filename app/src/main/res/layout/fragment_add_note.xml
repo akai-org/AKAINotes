@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:src="@drawable/ic_arrow_back"
-        android:contentDescription="@string/click_to_go_backa"
+        android:contentDescription="@string/click_to_go_back"
         app:layout_constraintBottom_toBottomOf="@id/actionBarLL"
         app:layout_constraintStart_toStartOf="@id/actionBarLL"
         app:layout_constraintTop_toTopOf="@id/actionBarLL" />
