@@ -1,5 +1,8 @@
 package pl.kossa.akainotes.fragments.login
 
+import android.util.Log
+import android.util.Patterns
+import androidx.core.util.PatternsCompat
 import app.cash.turbine.test
 import io.mockk.clearAllMocks
 import io.mockk.every
@@ -22,7 +25,7 @@ class LoginViewModelTest {
 
     private val userRepository = mockk<UsersRepository>()
 
-    private val goodEmail = "jakub@akai.org"
+    private val goodEmail = "jakub@akai.org.pl"
     private val goodPassword = "password"
     private val badEmail = "bartek@akai.org"
     private val badPassword = "pass"
@@ -98,16 +101,16 @@ class LoginViewModelTest {
     @Test
     fun `when given email with bad pattern, then emit unenable login`() = runBlocking {
         //given
-
+        val sut = createSUT()
         //when
-        val isLoginEnabled = createSUT().apply {
-            setEmail(badPatternEmail)
+        val isLoginEnabled = sut.apply {
             setPassword(goodPassword)
         }.isLoginEnabled
 
         //then
         isLoginEnabled.test {
             assertEquals(false, expectItem())
+            sut.setEmail(badPatternEmail)
             assertEquals(false, expectItem())
             cancel()
         }
@@ -116,16 +119,14 @@ class LoginViewModelTest {
     @Test
     fun `when given email with good pattern, then emit enable login`() = runBlocking {
         //given
-
+        val sut = createSUT()
         //when
-        val isLoginEnabled = createSUT().apply {
-            setEmail(goodEmail)
-            setPassword(goodPassword)
-        }.isLoginEnabled
+        sut.setPassword(goodPassword)
 
         //then
-        isLoginEnabled.test {
+        sut.isLoginEnabled.test {
             assertEquals(false, expectItem())
+            sut.setEmail(goodEmail)
             assertEquals(true, expectItem())
             cancel()
         }

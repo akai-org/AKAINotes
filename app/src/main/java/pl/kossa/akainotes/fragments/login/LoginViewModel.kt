@@ -1,6 +1,7 @@
 package pl.kossa.akainotes.fragments.login
 
 import android.util.Patterns
+import androidx.core.util.PatternsCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*
@@ -15,7 +16,7 @@ class LoginViewModel(private val usersRepository: UsersRepository) : ViewModel()
 
     val isLoginEnabled = combine(_email, _password) { email, password ->
         return@combine password.isNotBlank() && email.isNotBlank() &&
-                Patterns.EMAIL_ADDRESS.matcher(email).matches()
+                PatternsCompat.EMAIL_ADDRESS.matcher(email).matches()
     }
 
     val loginSuccessOrFailure =

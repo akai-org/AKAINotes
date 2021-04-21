@@ -1,6 +1,7 @@
 package pl.kossa.akainotes.fragments.register
 
 import android.util.Patterns
+import androidx.core.util.PatternsCompat
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
@@ -12,8 +13,15 @@ class RegisterViewModel : ViewModel() {
     private val _repeatPassword = MutableStateFlow("")
     private val _isCheckedAcceptTerms = MutableStateFlow(false)
 
-    val isChangePasswordEnabled = combine(_email, _password, _repeatPassword, _isCheckedAcceptTerms) { email, password, repeatPassword, isChecked ->
-        return@combine email.isNotBlank() && password.isNotBlank() && repeatPassword.isNotBlank() && (password == repeatPassword) && Patterns.EMAIL_ADDRESS.matcher(email).matches() && isChecked
+    val isChangePasswordEnabled = combine(
+        _email,
+        _password,
+        _repeatPassword,
+        _isCheckedAcceptTerms
+    ) { email, password, repeatPassword, isChecked ->
+        return@combine email.isNotBlank() && password.isNotBlank() && repeatPassword.isNotBlank() && (password == repeatPassword) && PatternsCompat.EMAIL_ADDRESS.matcher(
+            email
+        ).matches() && isChecked
     }
 
     fun setOldPassword(email: String) {

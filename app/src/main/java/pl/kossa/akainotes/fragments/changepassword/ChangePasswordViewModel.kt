@@ -1,6 +1,7 @@
 package pl.kossa.akainotes.fragments.changepassword
 
 import android.util.Patterns
+import androidx.core.util.PatternsCompat
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.*
 
@@ -10,7 +11,7 @@ class ChangePasswordViewModel: ViewModel() {
 
 
     val isSendMailEnabled = _email.map {  email ->
-        email.isNotBlank() && Patterns.EMAIL_ADDRESS.matcher(
+        email.isNotBlank() && PatternsCompat.EMAIL_ADDRESS.matcher(
             email
         ).matches()
     }
