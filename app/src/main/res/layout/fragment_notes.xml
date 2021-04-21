@@ -22,4 +22,14 @@
         app:srcCompat="@drawable/ic_plus"
         app:useCompatPadding="true" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/userInformationButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/click_to_user_information"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_user_image"
+        app:useCompatPadding="true" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

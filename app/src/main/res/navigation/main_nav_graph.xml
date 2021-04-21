@@ -14,6 +14,9 @@
         <action
             android:id="@+id/goToAddNote"
             app:destination="@id/addNoteFragment" />
+        <action
+            android:id="@+id/action_notesFragment_to_userInformationFragment"
+            app:destination="@id/userInformationFragment" />
 
     </fragment>
 
@@ -22,4 +25,13 @@
         android:name="pl.kossa.akainotes.fragments.addNote.AddNoteFragment"
         android:label="Add Notes"
         tools:layout="@layout/fragment_add_note"/>
+    <fragment
+        android:id="@+id/userInformationFragment"
+        android:name="pl.kossa.akainotes.fragments.userInformation.userInformationFragment"
+        android:label="fragment_user_information"
+        tools:layout="@layout/fragment_user_information" >
+        <action
+            android:id="@+id/action_userInformationFragment_to_notesFragment"
+            app:destination="@id/notesFragment" />
+    </fragment>
 </navigation>

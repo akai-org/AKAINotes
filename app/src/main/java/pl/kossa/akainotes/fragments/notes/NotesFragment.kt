@@ -16,6 +16,7 @@ import pl.kossa.akainotes.SwipeDeleteCallback
 import pl.kossa.akainotes.adapters.NotesRvAdapter
 import pl.kossa.akainotes.data.Note
 import pl.kossa.akainotes.extensions.makeCancelSnackbar
+import pl.kossa.akainotes.fragments.notes.NotesFragmentDirections.Companion.actionNotesFragmentToUserInformationFragment
 
 class NotesFragment : Fragment(R.layout.fragment_notes) {
 
@@ -56,6 +57,11 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
         addNotesButton.setOnClickListener {
             findNavController().navigate(NotesFragmentDirections.goToAddNote())
         }
+
+        userInformationButton.setOnClickListener {
+            findNavController().navigate(NotesFragmentDirections.actionNotesFragmentToUserInformationFragment())
+        }
+
         setupRecyclerView()
     }
 
