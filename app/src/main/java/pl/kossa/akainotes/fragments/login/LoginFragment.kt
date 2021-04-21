@@ -1,9 +1,8 @@
 package pl.kossa.akainotes.fragments.login
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -12,11 +11,12 @@ import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import pl.kossa.akainotes.R
+import pl.kossa.akainotes.repository.UsersRepository
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private val viewModel by lazy {
-        LoginViewModel()
+        LoginViewModel(UsersRepository())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -28,8 +28,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             viewModel.setPassword(text.toString())
         }
         loginButton.setOnClickListener {
-            findNavController().navigate(LoginFragmentDirections.goToMainActivity())
-            requireActivity().finish()
+                viewModel.requestLogin()
         }
 
         registerButton.setOnClickListener {
@@ -44,9 +43,22 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     }
 
     private fun collectFlow() {
-        lifecycleScope.launch {
-            viewModel.isLoginEnabled.collect {
-                loginButton.isEnabled = it
+        lifecycleScope.apply {
+            launch {
+                viewModel.isLoginEnabled.collect {
+                    loginButton.isEnabled = it
+                }
+            }
+            launch {
+                viewModel.loginSuccess.collect {
+                    findNavController().navigate(LoginFragmentDirections.goToMainActivity())
+                    requireActivity().finish()
+                }
+            }
+            launch {
+                viewModel.loginFailure.collect {
+                    Toast.makeText(requireContext(), "Wrong email or password!", Toast.LENGTH_LONG).show()
+                }
             }
         }
     }

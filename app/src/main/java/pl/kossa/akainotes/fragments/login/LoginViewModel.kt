@@ -2,11 +2,14 @@ package pl.kossa.akainotes.fragments.login
 
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.combine
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
+import pl.kossa.akainotes.repository.UsersRepository
 
-class LoginViewModel : ViewModel() {
+class LoginViewModel(private val usersRepository: UsersRepository) : ViewModel() {
 
+    private val _login = MutableSharedFlow<Unit>()
     private val _email = MutableStateFlow("")
     private val _password = MutableStateFlow("")
 
@@ -16,6 +19,19 @@ class LoginViewModel : ViewModel() {
         ).matches()
     }
 
+    private val loginSuccessOrFailure = _login
+        .map {
+            _email.value == usersRepository.email &&
+                    _password.value == usersRepository.password
+        }
+
+    val loginSuccess = merge(loginSuccessOrFailure, usersRepository.userAlreadyLoggedIn)
+        .filter { it }
+        .map { Unit }
+
+    val loginFailure = loginSuccessOrFailure
+        .filter { !it }
+        .map { Unit }
 
     fun setEmail(email: String) {
         _email.value = email
@@ -23,6 +39,10 @@ class LoginViewModel : ViewModel() {
 
     fun setPassword(password: String) {
         _password.value = password
+    }
+
+    fun requestLogin() = viewModelScope.launch{
+        _login.emit(Unit)
     }
 
     fun getEmail(): String {
