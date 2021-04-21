@@ -13,19 +13,15 @@ class LoginViewModel(private val usersRepository: UsersRepository) : ViewModel()
     private val _email = MutableStateFlow("")
     private val _password = MutableStateFlow("")
 
-    val loginSuccess =
-        combine(_login, usersRepository.userAlreadyLoggedIn) { login, isAlreadyLogged ->
-            return@combine if(login || isAlreadyLogged) true else null
-        }
-
     val isLoginEnabled = combine(_email, _password) { email, password ->
-        return@combine password.isNotBlank() && email.isNotBlank() && Patterns.EMAIL_ADDRESS.matcher(
-            email
-        ).matches()
+        return@combine password.isNotBlank() && email.isNotBlank() &&
+                Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
-    val loginFailure = loginSuccess.map { if (it == false) true else null }
-
+    val loginSuccessOrFailure =
+        combine(_login, usersRepository.userAlreadyLoggedIn) { login, isAlreadyLogged ->
+            return@combine (login || isAlreadyLogged)
+        }.distinctUntilChanged()
 
     fun setEmail(email: String) {
         _email.value = email
@@ -35,7 +31,7 @@ class LoginViewModel(private val usersRepository: UsersRepository) : ViewModel()
         _password.value = password
     }
 
-    fun requestLogin() = viewModelScope.launch {
+    fun requestLogin() {
         val success =
             _email.value == usersRepository.email && _password.value == usersRepository.password
         _login.value = success

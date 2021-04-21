@@ -50,16 +50,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 }
             }
             launch {
-                viewModel.loginSuccess.collect {
-                    it?.let {
+                viewModel.loginSuccessOrFailure.collect {success->
+                    if(success){
                         findNavController().navigate(LoginFragmentDirections.goToMainActivity())
                         requireActivity().finish()
-                    }
-                }
-            }
-            launch {
-                viewModel.loginFailure.collect {
-                    it?.let {
+                    }else {
                         Toast.makeText(
                             requireContext(),
                             "Wrong email or password!",

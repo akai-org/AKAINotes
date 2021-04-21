@@ -26,13 +26,14 @@ class LoginViewModelTest {
     private val goodPassword = "password"
     private val badEmail = "bartek@akai.org"
     private val badPassword = "pass"
+    private val badPatternEmail = "kuba"
 
     private val dispatcher = TestCoroutineDispatcher()
 
     @Before
     fun setUp() {
-        Dispatchers.setMain(dispatcher)
         clearAllMocks()
+        Dispatchers.setMain(dispatcher)
 
         every { userRepository.userAlreadyLoggedIn } returns flow { emit(false) }
         every { userRepository.email } returns goodEmail
@@ -49,10 +50,10 @@ class LoginViewModelTest {
         every { userRepository.userAlreadyLoggedIn } returns flowOf(true)
 
         //when
-        val loginSuccessTest = createSUT().loginSuccess
+        val loginSuccess = createSUT().loginSuccessOrFailure
 
         //then
-        loginSuccessTest.test {
+        loginSuccess.test {
             assertEquals(true, expectItem())
             cancel()
         }
@@ -63,18 +64,70 @@ class LoginViewModelTest {
         //given
 
         //when
-        val sut = createSUT()
-
-        sut.setEmail(goodEmail)
-        sut.setPassword(goodPassword)
-        sut.requestLogin()
+        val loginSuccessOrFailure = createSUT().apply {
+            setEmail(goodEmail)
+            setPassword(goodPassword)
+            requestLogin()
+        }.loginSuccessOrFailure
 
         //then
-        sut.loginSuccess.test {
+        loginSuccessOrFailure.test {
             assertEquals(true, expectItem())
             cancel()
         }
+    }
 
+    @Test
+    fun `when given wrong email and password, then emit login failure`() = runBlocking {
+        //given
 
+        //when
+        val loginSuccessOrFailure = createSUT().apply {
+            setEmail(badEmail)
+            setPassword(badPassword)
+            requestLogin()
+        }.loginSuccessOrFailure
+
+        //then
+        loginSuccessOrFailure.test {
+            assertEquals(false, expectItem())
+            cancel()
+        }
+    }
+
+    @Test
+    fun `when given email with bad pattern, then emit unenable login`() = runBlocking {
+        //given
+
+        //when
+        val isLoginEnabled = createSUT().apply {
+            setEmail(badPatternEmail)
+            setPassword(goodPassword)
+        }.isLoginEnabled
+
+        //then
+        isLoginEnabled.test {
+            assertEquals(false, expectItem())
+            assertEquals(false, expectItem())
+            cancel()
+        }
+    }
+
+    @Test
+    fun `when given email with good pattern, then emit enable login`() = runBlocking {
+        //given
+
+        //when
+        val isLoginEnabled = createSUT().apply {
+            setEmail(goodEmail)
+            setPassword(goodPassword)
+        }.isLoginEnabled
+
+        //then
+        isLoginEnabled.test {
+            assertEquals(false, expectItem())
+            assertEquals(true, expectItem())
+            cancel()
+        }
     }
 }
