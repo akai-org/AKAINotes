@@ -28,7 +28,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             viewModel.setPassword(text.toString())
         }
         loginButton.setOnClickListener {
-                viewModel.requestLogin()
+            viewModel.requestLogin()
         }
 
         registerButton.setOnClickListener {
@@ -51,13 +51,21 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             }
             launch {
                 viewModel.loginSuccess.collect {
-                    findNavController().navigate(LoginFragmentDirections.goToMainActivity())
-                    requireActivity().finish()
+                    it?.let {
+                        findNavController().navigate(LoginFragmentDirections.goToMainActivity())
+                        requireActivity().finish()
+                    }
                 }
             }
             launch {
                 viewModel.loginFailure.collect {
-                    Toast.makeText(requireContext(), "Wrong email or password!", Toast.LENGTH_LONG).show()
+                    it?.let {
+                        Toast.makeText(
+                            requireContext(),
+                            "Wrong email or password!",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
                 }
             }
         }

@@ -4,8 +4,12 @@ import app.cash.turbine.test
 import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.setMain
 import org.junit.Before
 import org.junit.Assert.*
 import org.junit.Test
@@ -13,6 +17,7 @@ import pl.kossa.akainotes.repository.UsersRepository
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
+@ExperimentalCoroutinesApi
 class LoginViewModelTest {
 
     private val userRepository = mockk<UsersRepository>()
@@ -22,8 +27,11 @@ class LoginViewModelTest {
     private val badEmail = "bartek@akai.org"
     private val badPassword = "pass"
 
+    private val dispatcher = TestCoroutineDispatcher()
+
     @Before
     fun setUp() {
+        Dispatchers.setMain(dispatcher)
         clearAllMocks()
 
         every { userRepository.userAlreadyLoggedIn } returns flow { emit(false) }
@@ -45,7 +53,7 @@ class LoginViewModelTest {
 
         //then
         loginSuccessTest.test {
-            assertEquals(Unit, expectItem())
+            assertEquals(true, expectItem())
             cancel()
         }
     }
@@ -63,7 +71,7 @@ class LoginViewModelTest {
 
         //then
         sut.loginSuccess.test {
-            assertEquals(Unit, expectItem())
+            assertEquals(true, expectItem())
             cancel()
         }
 
