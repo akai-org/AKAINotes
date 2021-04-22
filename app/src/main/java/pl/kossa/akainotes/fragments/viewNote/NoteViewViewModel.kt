@@ -3,7 +3,7 @@ package pl.kossa.akainotes.fragments.viewNote
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 
-object NoteViewViewModel : ViewModel() {
+class NoteViewViewModel : ViewModel() {
     private val _title = MutableStateFlow("")
     private val _content = MutableStateFlow("")
 
