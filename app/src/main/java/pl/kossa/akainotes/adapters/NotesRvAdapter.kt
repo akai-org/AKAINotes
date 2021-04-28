@@ -22,7 +22,7 @@ class NotesRvAdapter(
         val note = notes[position]
         holder.titleTextView.text = note.title
         holder.descriptionTextView.text = note.description.take(50)
-        holder.itemView.setOnClickListener { listener(note) }
+        holder.itemView.setOnClickListener { listener?.invoke(note) }
     }
 
     override fun getItemCount() = notes.size
