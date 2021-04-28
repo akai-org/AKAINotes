@@ -9,7 +9,8 @@ import pl.kossa.akainotes.R
 import pl.kossa.akainotes.data.Note
 
 class NotesRvAdapter(
-    val notes: ArrayList<Note>
+    val notes: ArrayList<Note>,
+    val listener: (Note) -> Unit
 ) : RecyclerView.Adapter<NotesRvAdapter.NotesViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesViewHolder {
@@ -21,6 +22,7 @@ class NotesRvAdapter(
         val note = notes[position]
         holder.titleTextView.text = note.title
         holder.descriptionTextView.text = note.description.take(50)
+        holder.itemView.setOnClickListener { listener.invoke(note) }
     }
 
     override fun getItemCount() = notes.size
