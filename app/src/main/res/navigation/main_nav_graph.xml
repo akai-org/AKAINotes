@@ -31,5 +31,16 @@
         android:id="@+id/noteViewFragment"
         android:name="pl.kossa.akainotes.fragments.viewNote.NoteViewFragment"
         android:label="Note View"
-        tools:layout="@layout/fragment_view_note"/>
+        tools:layout="@layout/fragment_view_note">
+
+        <argument
+            android:name="title"
+            app:argType="string"
+            android:defaultValue="tytul"/>
+        <argument
+            android:name="description"
+            app:argType="string"
+            android:defaultValue=""/>
+    </fragment>
+
 </navigation>

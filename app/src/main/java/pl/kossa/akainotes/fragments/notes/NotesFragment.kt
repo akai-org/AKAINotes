@@ -14,17 +14,13 @@ import pl.kossa.akainotes.SwipeDeleteCallback
 import pl.kossa.akainotes.adapters.NotesRvAdapter
 import pl.kossa.akainotes.data.Note
 import pl.kossa.akainotes.extensions.makeCancelSnackbar
-import pl.kossa.akainotes.fragments.viewNote.NoteViewViewModel
 
 class NotesFragment : Fragment(R.layout.fragment_notes) {
 
-    private val viewModel = NoteViewViewModel
-
     val adapter by lazy {
         NotesRvAdapter(arrayListOf()) { note ->
-            viewModel.setTitle(note.title.toString())
-            viewModel.setContent(note.description.toString())
-            findNavController().navigate(NotesFragmentDirections.goToNoteView())
+            val direction = NotesFragmentDirections.goToNoteView(title = note.title?: "", description = note.description?: "" )
+            findNavController().navigate(direction)
         }
     }
 
