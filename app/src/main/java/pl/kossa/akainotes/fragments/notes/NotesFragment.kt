@@ -1,7 +1,6 @@
 package pl.kossa.akainotes.fragments.notes
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -9,7 +8,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_notes.*
 import pl.kossa.akainotes.R
 import pl.kossa.akainotes.SwipeDeleteCallback
@@ -21,7 +19,10 @@ import pl.kossa.akainotes.fragments.notes.NotesFragmentDirections.Companion.acti
 class NotesFragment : Fragment(R.layout.fragment_notes) {
 
     val adapter by lazy {
-        NotesRvAdapter(arrayListOf())
+        NotesRvAdapter(arrayListOf()) { note ->
+            val direction = NotesFragmentDirections.goToNoteView(title = note.title?: "", description = note.description?: "" )
+            findNavController().navigate(direction)
+        }
     }
 
     private val swipeDeleteCallback by lazy {
@@ -54,6 +55,7 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         addNotesButton.setOnClickListener {
             findNavController().navigate(NotesFragmentDirections.goToAddNote())
         }
@@ -70,6 +72,7 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
         notesRecyclerView.adapter = adapter
         val itemTouchHelper = ItemTouchHelper(swipeDeleteCallback)
         itemTouchHelper.attachToRecyclerView(notesRecyclerView)
+        adapter.notes.clear()
         adapter.notes.add(Note("Tyt1", "Notatka1"))
         adapter.notes.add(Note("Tyt2", "Notatka2"))
         adapter.notes.add(Note("Tyt3", "Notatka3"))
