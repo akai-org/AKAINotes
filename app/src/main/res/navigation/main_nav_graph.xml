@@ -27,7 +27,7 @@
         tools:layout="@layout/fragment_add_note"/>
     <fragment
         android:id="@+id/userInformationFragment"
-        android:name="pl.kossa.akainotes.fragments.userInformation.userInformationFragment"
+        android:name="pl.kossa.akainotes.fragments.userInformation.UserInformationFragment"
         android:label="fragment_user_information"
         tools:layout="@layout/fragment_user_information" >
         <action
