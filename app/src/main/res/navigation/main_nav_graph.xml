@@ -14,10 +14,13 @@
         <action
             android:id="@+id/goToAddNote"
             app:destination="@id/addNoteFragment" />
+        <action
+            android:id="@+id/goToProfile"
+            app:destination="@id/profileFragment" />
 
         <action
-            android:id="@+id/goToNoteView"
-            app:destination="@+id/noteViewFragment"/>
+            android:id="@+id/goToNote"
+            app:destination="@+id/noteFragment"/>
 
     </fragment>
 
@@ -26,12 +29,18 @@
         android:name="pl.kossa.akainotes.fragments.addNote.AddNoteFragment"
         android:label="Add Notes"
         tools:layout="@layout/fragment_add_note"/>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="pl.kossa.akainotes.fragments.profile.ProfileFragment"
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile" >
+    </fragment>
 
     <fragment
-        android:id="@+id/noteViewFragment"
-        android:name="pl.kossa.akainotes.fragments.viewNote.NoteViewFragment"
-        android:label="Note View"
-        tools:layout="@layout/fragment_view_note">
+        android:id="@+id/noteFragment"
+        android:name="pl.kossa.akainotes.fragments.note.NoteFragment"
+        android:label="NoteFragment"
+        tools:layout="@layout/fragment_note">
 
         <argument
             android:name="title"

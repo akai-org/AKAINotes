@@ -18,4 +18,10 @@
     <string name="add_note">Dodaj notatkę</string>
     <string name="save">Zapisz</string>
     <string name="click_to_go_back">Naciśnij, aby wrócić do poprzedniego ekranu.</string>
+    <string name="click_to_go_backa">click_to_go_back</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="userimage">userImage</string>
+    <string name="username">userName</string>
+    <string name="click_to_user_information">click to user information</string>
 </resources>

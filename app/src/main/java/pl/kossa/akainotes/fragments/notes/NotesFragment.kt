@@ -19,7 +19,7 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
 
     val adapter by lazy {
         NotesRvAdapter(arrayListOf()) { note ->
-            val direction = NotesFragmentDirections.goToNoteView(title = note.title?: "", description = note.description?: "" )
+                val direction = NotesFragmentDirections.goToNote(title = note.title?: "", description = note.description)
             findNavController().navigate(direction)
         }
     }
@@ -58,6 +58,11 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
         addNotesButton.setOnClickListener {
             findNavController().navigate(NotesFragmentDirections.goToAddNote())
         }
+
+        userInformationButton.setOnClickListener {
+            findNavController().navigate(NotesFragmentDirections.goToProfile())
+        }
+
         setupRecyclerView()
     }
 

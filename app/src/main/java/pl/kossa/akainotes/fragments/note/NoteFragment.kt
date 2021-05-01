@@ -1,16 +1,16 @@
-package pl.kossa.akainotes.fragments.viewNote
+package pl.kossa.akainotes.fragments.note
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import kotlinx.android.synthetic.main.fragment_view_note.*
+import kotlinx.android.synthetic.main.fragment_note.*
 import pl.kossa.akainotes.R
 
-class NoteViewFragment() : Fragment(R.layout.fragment_view_note) {
+class NoteFragment() : Fragment(R.layout.fragment_note) {
 
-    val args: NoteViewFragmentArgs by navArgs()
+    val args: NoteFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
