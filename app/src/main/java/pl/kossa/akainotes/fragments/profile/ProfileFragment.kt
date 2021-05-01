@@ -1,20 +1,20 @@
-package pl.kossa.akainotes.fragments.userInformation
+package pl.kossa.akainotes.fragments.profile
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_user_information.*
+import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import pl.kossa.akainotes.R
 
 
-class UserInformationFragment : Fragment(R.layout.fragment_user_information) {
+class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private val viewModel by lazy {
-        UserInformationViewModel()
+        ProfileViewModel()
     }
 
 
@@ -22,7 +22,7 @@ class UserInformationFragment : Fragment(R.layout.fragment_user_information) {
         super.onViewCreated(view, savedInstanceState)
 
         userInformationBackButton.setOnClickListener {
-            findNavController().navigate(R.id.action_userInformationFragment_to_notesFragment)
+            findNavController().popBackStack()
         }
 
         collectFlow()

@@ -1,10 +1,10 @@
-package pl.kossa.akainotes.fragments.userInformation
+package pl.kossa.akainotes.fragments.profile
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class UserInformationViewModel : ViewModel() {
+class ProfileViewModel : ViewModel() {
 
     private val _email = MutableStateFlow("email")
     val email: StateFlow<String>
