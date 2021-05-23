@@ -1,5 +1,6 @@
 package pl.kossa.akainotes.api
 
+import android.util.Log
 import okhttp3.OkHttpClient
 import pl.kossa.akainotes.api.models.LoginRequest
 import pl.kossa.akainotes.prefs.PrefsHelper
@@ -12,10 +13,16 @@ class RetrofitClient(
 
     private val client = OkHttpClient.Builder()
         .addInterceptor {
-            val request = it.request().newBuilder()
-                .addHeader("Authorization", "Bearer ${prefsHelper.token}")
-                .build()
-            return@addInterceptor it.proceed(request)
+            val request = it.request()
+            val path = request.url().pathSegments().joinToString(separator = "")
+            return@addInterceptor if (path != "login") {
+                val newRequest = it.request().newBuilder()
+                    .addHeader("Authorization", "Bearer ${prefsHelper.token}")
+                    .build()
+                it.proceed(newRequest)
+            } else {
+                it.proceed(request)
+            }
         }
         .build()
 
