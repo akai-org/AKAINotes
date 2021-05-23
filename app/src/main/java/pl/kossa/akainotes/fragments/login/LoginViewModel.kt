@@ -1,19 +1,47 @@
 package pl.kossa.akainotes.fragments.login
 
+import android.util.Log
 import android.util.Patterns
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavDirections
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.launch
+import pl.kossa.akainotes.api.RetrofitClient
+import pl.kossa.akainotes.api.models.LoginRequest
+import pl.kossa.akainotes.api.models.TokenResponse
+import pl.kossa.akainotes.prefs.PrefsHelper
+import java.lang.Exception
 
-class LoginViewModel : ViewModel() {
+class LoginViewModel(private val prefsHelper: PrefsHelper) : ViewModel() {
 
-    private val _email = MutableStateFlow("")
-    private val _password = MutableStateFlow("")
+    private val retrofitClient = RetrofitClient(prefsHelper)
+
+    private val _email = MutableStateFlow("test@test.pl")
+    private val _password = MutableStateFlow("testtest1")
+    val directionLiveData = MutableLiveData<NavDirections?>(null)
 
     val isLoginEnabled = combine(_email, _password) { email, password ->
         return@combine password.isNotBlank() && email.isNotBlank() && Patterns.EMAIL_ADDRESS.matcher(
             email
         ).matches()
+    }
+
+    val tokenResponse = MutableLiveData<TokenResponse>()
+
+    fun login() {
+        viewModelScope.launch {
+            try {
+                val response = retrofitClient.login(LoginRequest(_email.value, _password.value))
+                prefsHelper.token = response.token
+                directionLiveData.value = LoginFragmentDirections.goToMainActivity()
+                Log.d("MyLog", "Login: $response")
+            } catch (e: Exception) {
+                Log.e("MyLog", "Exception: $e")
+            }
+        }
     }
 
 

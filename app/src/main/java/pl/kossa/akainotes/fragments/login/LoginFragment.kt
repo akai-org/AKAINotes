@@ -10,12 +10,18 @@ import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import pl.kossa.akainotes.R
+import pl.kossa.akainotes.prefs.PrefsHelper
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private val viewModel by lazy {
-        LoginViewModel()
+        LoginViewModel(PrefsHelper(requireContext()))
     }
+
+    private val prefsHelper by lazy {
+        PrefsHelper(requireContext())
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -26,8 +32,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             viewModel.setPassword(text.toString())
         }
         loginButton.setOnClickListener {
-            findNavController().navigate(LoginFragmentDirections.goToMainActivity())
-            requireActivity().finish()
+            prefsHelper.email = viewModel.getEmail()
+            viewModel.login()
         }
 
         registerButton.setOnClickListener {
@@ -45,6 +51,14 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         lifecycleScope.launch {
             viewModel.isLoginEnabled.collect {
                 loginButton.isEnabled = it
+            }
+        }
+        viewModel.directionLiveData.observe(viewLifecycleOwner) {
+            it?.let {
+                findNavController().navigate(it)
+                if(it == LoginFragmentDirections.goToMainActivity()) {
+                    requireActivity().finish()
+                }
             }
         }
     }
