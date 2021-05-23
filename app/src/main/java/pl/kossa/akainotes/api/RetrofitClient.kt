@@ -14,7 +14,7 @@ class RetrofitClient(
     private val client = OkHttpClient.Builder()
         .addInterceptor {
             val request = it.request()
-            val path = request.url().pathSegments().joinToString(separator = "")
+            val path = request.url().pathSegments().joinToString(separator = "/")
             return@addInterceptor if (path != "login") {
                 val newRequest = it.request().newBuilder()
                     .addHeader("Authorization", "Bearer ${prefsHelper.token}")
