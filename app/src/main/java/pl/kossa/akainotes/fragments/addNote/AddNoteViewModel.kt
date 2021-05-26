@@ -32,13 +32,10 @@ class AddNoteViewModel(prefsHelper: PrefsHelper) : ViewModel() {
     fun addNote(note: Note) {
         viewModelScope.launch {
             withContext(Dispatchers.Main) {
-                Log.d("AddNoteViewModel", loading.value.toString())
                 _loading.value = true
-                Log.d("AddNoteViewModel", loading.value.toString())
                 try {
                     withContext(Dispatchers.IO) {
                         retrofitClient.addNote(note)
-                        delay(1500)
                     }
                     _noteAdded.value = true
                 } catch (e: Exception) {

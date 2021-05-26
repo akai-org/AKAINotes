@@ -57,7 +57,6 @@ class AddNoteFragment : Fragment(R.layout.fragment_add_note) {
         }
         lifecycleScope.launch {
             viewModel.loading.collect {
-                Log.d("AddNoteFragment", "collect")
                 progressBar.isVisible = it
                 addNoteButton.isVisible = !it
             }
