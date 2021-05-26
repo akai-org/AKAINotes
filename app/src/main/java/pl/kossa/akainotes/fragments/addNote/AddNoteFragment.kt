@@ -1,8 +1,9 @@
 package pl.kossa.akainotes.fragments.addNote
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -12,11 +13,12 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import pl.kossa.akainotes.R
 import pl.kossa.akainotes.data.Note
+import pl.kossa.akainotes.prefs.PrefsHelper
 
 class AddNoteFragment : Fragment(R.layout.fragment_add_note) {
 
     private val viewModel by lazy {
-        AddNoteViewModel()
+        AddNoteViewModel(PrefsHelper(requireContext()))
     }
 
 
@@ -33,26 +35,28 @@ class AddNoteFragment : Fragment(R.layout.fragment_add_note) {
 
         addNoteButton.setOnClickListener {
             val note = Note(viewModel.getTitle(), viewModel.getContent())
-            Toast.makeText(
-                requireContext(),
-                "Titile: \n${note.title}\nDescription: \n${note.description}\nTODO: Send note to DB",
-                Toast.LENGTH_SHORT
-            ).show()
-            findNavController().popBackStack()
-            //TODO call api
+            viewModel.addNote(note)
         }
 
         backArrow.setOnClickListener {
             findNavController().popBackStack()
         }
-        collectFlow()
+        collectObservables()
     }
 
-    private fun collectFlow() {
+    private fun collectObservables() {
         lifecycleScope.launch {
             viewModel.isSaveNoteEnabled.collect {
                 addNoteButton.isEnabled = it
             }
+        }
+        viewModel.noteAdded.observe(viewLifecycleOwner) {
+            if (it) findNavController().popBackStack()
+        }
+        viewModel.loading.observe(viewLifecycleOwner) {
+            Log.d("AddNoteFragment", "collect")
+            progressBar.isVisible = it
+            addNoteButton.isVisible = !it
         }
     }
 }
