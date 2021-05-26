@@ -49,14 +49,14 @@ class AddNoteFragment : Fragment(R.layout.fragment_add_note) {
             viewModel.isSaveNoteEnabled.collect {
                 addNoteButton.isEnabled = it
             }
-        }
-        viewModel.noteAdded.observe(viewLifecycleOwner) {
-            if (it) findNavController().popBackStack()
-        }
-        viewModel.loading.observe(viewLifecycleOwner) {
-            Log.d("AddNoteFragment", "collect")
-            progressBar.isVisible = it
-            addNoteButton.isVisible = !it
+            viewModel.noteAdded.collect {
+                if (it) findNavController().popBackStack()
+            }
+            viewModel.loading.collect {
+                Log.d("AddNoteFragment", "collect")
+                progressBar.isVisible = it
+                addNoteButton.isVisible = !it
+            }
         }
     }
 }

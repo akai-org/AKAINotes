@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -19,8 +20,10 @@ class AddNoteViewModel(prefsHelper: PrefsHelper) : ViewModel() {
 
     val _title = MutableStateFlow("")
     val _content = MutableStateFlow("")
-    val noteAdded = MutableLiveData<Boolean>()
-    val loading = MutableLiveData(false)
+    private val _noteAdded = MutableStateFlow(false)
+    val noteAdded = _noteAdded.asStateFlow()
+    private val _loading = MutableStateFlow(false)
+    val loading = _loading.asStateFlow()
 
     val isSaveNoteEnabled = combine(_title, _content) { title, content ->
         return@combine title.isNotBlank() && title.length <= 100 && content.length <= 500
@@ -28,16 +31,21 @@ class AddNoteViewModel(prefsHelper: PrefsHelper) : ViewModel() {
 
     fun addNote(note: Note) {
         viewModelScope.launch {
-            loading.value = true
-            try {
-                withContext(Dispatchers.IO) {
-                    retrofitClient.addNote(note)
+            withContext(Dispatchers.Main) {
+                Log.d("AddNoteViewModel", loading.value.toString())
+                _loading.value = true
+                Log.d("AddNoteViewModel", loading.value.toString())
+                try {
+                    withContext(Dispatchers.IO) {
+                        retrofitClient.addNote(note)
+                        delay(1500)
+                    }
+                    _noteAdded.value = true
+                } catch (e: Exception) {
+                    Log.e("AddNoteViewModel", e.message, e)
                 }
-                noteAdded.value = true
-            } catch (e: Exception) {
-                Log.e("AddNoteViewModel", e.message, e)
+                _loading.value = false
             }
-            loading.value = false
         }
     }
 
