@@ -4,6 +4,7 @@ import pl.kossa.akainotes.api.models.LoginRequest
 import pl.kossa.akainotes.api.models.TokenResponse
 import pl.kossa.akainotes.data.Note
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface NotesApi {
@@ -13,4 +14,7 @@ interface NotesApi {
 
     @POST("/notes")
     suspend fun addNote(@Body note: Note)
+
+    @GET("/notes")
+    suspend fun getNotes(): List<Note>
 }
