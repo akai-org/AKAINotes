@@ -19,8 +19,8 @@ class LoginViewModel(private val prefsHelper: PrefsHelper) : ViewModel() {
 
     private val retrofitClient = RetrofitClient(prefsHelper)
 
-    private val _email = MutableStateFlow("test@test.pl")
-    private val _password = MutableStateFlow("testtest1")
+    private val _email = MutableStateFlow("")
+    private val _password = MutableStateFlow("")
     val directionLiveData = MutableLiveData<NavDirections?>(null)
 
     val isLoginEnabled = combine(_email, _password) { email, password ->
