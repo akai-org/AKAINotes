@@ -5,4 +5,9 @@
             10.0.2.2
         </domain>
     </domain-config>
+    <domain-config>
+        <domain includeSubdomains="true">
+            akai-notes.herokuapp.com
+        </domain>
+    </domain-config>
 </network-security-config>

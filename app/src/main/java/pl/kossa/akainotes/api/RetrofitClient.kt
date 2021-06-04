@@ -29,7 +29,7 @@ class RetrofitClient(
 
     private val retrofit = Retrofit.Builder()
         .client(client)
-        .baseUrl("http://10.0.2.2:8080/")
+        .baseUrl("https://akai-notes.herokuapp.com/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
@@ -38,4 +38,6 @@ class RetrofitClient(
     suspend fun login(loginRequest: LoginRequest) = serivce.login(loginRequest)
 
     suspend fun addNote(note: Note) = serivce.addNote(note)
+
+    suspend fun getNotes() = serivce.getNotes()
 }

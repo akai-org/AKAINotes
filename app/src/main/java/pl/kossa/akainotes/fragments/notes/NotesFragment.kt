@@ -4,22 +4,34 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_notes.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import pl.kossa.akainotes.R
 import pl.kossa.akainotes.SwipeDeleteCallback
 import pl.kossa.akainotes.adapters.NotesRvAdapter
+import pl.kossa.akainotes.api.RetrofitClient
 import pl.kossa.akainotes.data.Note
 import pl.kossa.akainotes.extensions.makeCancelSnackbar
+import pl.kossa.akainotes.prefs.PrefsHelper
 
 class NotesFragment : Fragment(R.layout.fragment_notes) {
 
+    private val viewModel by lazy {
+        NotesViewModel(RetrofitClient(PrefsHelper(requireContext())))
+    }
+
     val adapter by lazy {
         NotesRvAdapter(arrayListOf()) { note ->
-                val direction = NotesFragmentDirections.goToNote(title = note.title?: "", description = note.description)
+            val direction = NotesFragmentDirections.goToNote(
+                title = note.title ?: "",
+                description = note.description
+            )
             findNavController().navigate(direction)
         }
     }
@@ -63,7 +75,26 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
             findNavController().navigate(NotesFragmentDirections.goToProfile())
         }
 
+        swipeRefresh.setOnRefreshListener {
+            viewModel.getNotes()
+        }
         setupRecyclerView()
+        collectFlow()
+    }
+
+    private fun collectFlow() {
+        lifecycleScope.launch {
+            viewModel.notesList.collect {
+                adapter.notes.clear()
+                adapter.notes.addAll(it)
+                adapter.notifyDataSetChanged()
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.isLoading.collect {
+                swipeRefresh.isRefreshing = it
+            }
+        }
     }
 
     private fun setupRecyclerView() {
@@ -71,12 +102,5 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
         notesRecyclerView.adapter = adapter
         val itemTouchHelper = ItemTouchHelper(swipeDeleteCallback)
         itemTouchHelper.attachToRecyclerView(notesRecyclerView)
-        adapter.notes.clear()
-        adapter.notes.add(Note("Tyt1", "Notatka1"))
-        adapter.notes.add(Note("Tyt2", "Notatka2"))
-        adapter.notes.add(Note("Tyt3", "Notatka3"))
-        adapter.notes.add(Note("Tyt4", "Notatka4"))
-        adapter.notes.add(Note("Tyt5", "Notatka5"))
-        adapter.notifyDataSetChanged()
     }
 }
