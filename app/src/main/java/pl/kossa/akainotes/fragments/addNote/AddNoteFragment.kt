@@ -32,7 +32,7 @@ class AddNoteFragment : Fragment(R.layout.fragment_add_note) {
         }
 
         addNoteButton.setOnClickListener {
-            val note = Note(viewModel.getTitle(), viewModel.getContent())
+            val note = Note("", viewModel.getTitle(), viewModel.getContent())
             viewModel.addNote(note)
         }
 

@@ -20,7 +20,7 @@
 
         <action
             android:id="@+id/goToNote"
-            app:destination="@+id/noteFragment"/>
+            app:destination="@+id/noteFragment" />
 
     </fragment>
 
@@ -28,13 +28,13 @@
         android:id="@+id/addNoteFragment"
         android:name="pl.kossa.akainotes.fragments.addNote.AddNoteFragment"
         android:label="Add Notes"
-        tools:layout="@layout/fragment_add_note"/>
+        tools:layout="@layout/fragment_add_note" />
+
     <fragment
         android:id="@+id/profileFragment"
         android:name="pl.kossa.akainotes.fragments.profile.ProfileFragment"
         android:label="ProfileFragment"
-        tools:layout="@layout/fragment_profile" >
-    </fragment>
+        tools:layout="@layout/fragment_profile"></fragment>
 
     <fragment
         android:id="@+id/noteFragment"
@@ -43,13 +43,8 @@
         tools:layout="@layout/fragment_note">
 
         <argument
-            android:name="title"
-            app:argType="string"
-            android:defaultValue="tytul"/>
-        <argument
-            android:name="description"
-            app:argType="string"
-            android:defaultValue=""/>
+            android:name="noteId"
+            app:argType="string" />
     </fragment>
 
 </navigation>

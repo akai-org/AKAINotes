@@ -40,4 +40,6 @@ class RetrofitClient(
     suspend fun addNote(note: Note) = serivce.addNote(note)
 
     suspend fun getNotes() = serivce.getNotes()
+
+    suspend fun getNote(noteId: String) = serivce.getNote(noteId)
 }

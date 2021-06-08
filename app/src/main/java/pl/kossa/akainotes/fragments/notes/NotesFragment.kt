@@ -26,10 +26,7 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
 
     val adapter by lazy {
         NotesRvAdapter(arrayListOf()) { note ->
-            val direction = NotesFragmentDirections.goToNote(
-                title = note.title ?: "",
-                description = note.description
-            )
+            val direction = NotesFragmentDirections.goToNote(note.id)
             findNavController().navigate(direction)
         }
     }
