@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,8 +15,10 @@ import kotlinx.coroutines.withContext
 import pl.kossa.akainotes.api.RetrofitClient
 import pl.kossa.akainotes.data.Note
 import pl.kossa.akainotes.prefs.PrefsHelper
+import javax.inject.Inject
 
-class AddNoteViewModel(prefsHelper: PrefsHelper) : ViewModel() {
+@HiltViewModel
+class AddNoteViewModel @Inject constructor(prefsHelper: PrefsHelper) : ViewModel() {
     private val retrofitClient = RetrofitClient(prefsHelper)
 
     val _title = MutableStateFlow("")

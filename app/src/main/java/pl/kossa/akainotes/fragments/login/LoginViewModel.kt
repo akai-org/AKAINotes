@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
@@ -14,8 +15,18 @@ import pl.kossa.akainotes.api.models.LoginRequest
 import pl.kossa.akainotes.api.models.TokenResponse
 import pl.kossa.akainotes.prefs.PrefsHelper
 import java.lang.Exception
+import javax.inject.Inject
 
-class LoginViewModel(private val prefsHelper: PrefsHelper) : ViewModel() {
+@HiltViewModel
+class LoginViewModel @Inject constructor(val prefsHelper: PrefsHelper) : ViewModel() {
+
+    companion object {
+        private const val TAG = "LoginViewModel_"
+    }
+
+    init {
+        Log.d(TAG, "PrefsHelper hash: ${prefsHelper.hashCode()}")
+    }
 
     private val retrofitClient = RetrofitClient(prefsHelper)
 
