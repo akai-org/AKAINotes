@@ -2,10 +2,13 @@ package pl.kossa.akainotes.fragments.register
 
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
+import javax.inject.Inject
 
-class RegisterViewModel : ViewModel() {
+@HiltViewModel
+class RegisterViewModel @Inject constructor() : ViewModel() {
 
     private val _email = MutableStateFlow("")
     private val _password = MutableStateFlow("")

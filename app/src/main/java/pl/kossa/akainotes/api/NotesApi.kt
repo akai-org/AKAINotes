@@ -6,6 +6,7 @@ import pl.kossa.akainotes.data.Note
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface NotesApi {
 
@@ -17,4 +18,7 @@ interface NotesApi {
 
     @GET("/notes")
     suspend fun getNotes(): List<Note>
+
+    @GET("/notes/{noteId}")
+    suspend fun getNote(@Path("noteId") noteId: String): Note
 }

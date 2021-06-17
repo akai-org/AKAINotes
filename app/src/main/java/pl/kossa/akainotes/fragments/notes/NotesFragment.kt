@@ -4,34 +4,29 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_notes.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import pl.kossa.akainotes.R
 import pl.kossa.akainotes.SwipeDeleteCallback
 import pl.kossa.akainotes.adapters.NotesRvAdapter
-import pl.kossa.akainotes.api.RetrofitClient
-import pl.kossa.akainotes.data.Note
 import pl.kossa.akainotes.extensions.makeCancelSnackbar
-import pl.kossa.akainotes.prefs.PrefsHelper
 
+@AndroidEntryPoint
 class NotesFragment : Fragment(R.layout.fragment_notes) {
 
-    private val viewModel by lazy {
-        NotesViewModel(RetrofitClient(PrefsHelper(requireContext())))
-    }
+    private val viewModel: NotesViewModel by viewModels()
 
     val adapter by lazy {
         NotesRvAdapter(arrayListOf()) { note ->
-            val direction = NotesFragmentDirections.goToNote(
-                title = note.title ?: "",
-                description = note.description
-            )
+            val direction = NotesFragmentDirections.goToNote(note.id)
             findNavController().navigate(direction)
         }
     }
